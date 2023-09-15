@@ -1,13 +1,13 @@
 package com.seasac.pair
 
 interface FeatureInterface {
-    fun update()
+    fun<T> update(t: T)
 
-    fun showList()
+    fun<T> showList() : MutableList<T>
 
-    fun enroll()
+    fun<T> enroll(t: T)
 
-    fun search()
+    fun<T> search(t:T) : T
 
     fun delete()
 }
