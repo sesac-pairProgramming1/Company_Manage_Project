@@ -13,7 +13,7 @@ import java.io.ObjectOutputStream
 
 class FestivalManager : FeatureInterface {
 
-    private var festivalList: MutableList<Festival> = deSerializationArtistFile()
+    private var festivalList: MutableList<Festival> = deSerializationFestivalFile()
     override fun <T> update(t: T) {
 
     }
@@ -48,22 +48,24 @@ class FestivalManager : FeatureInterface {
         }
     }
 
-    override fun<T> delete(t: T){
+    override fun <T> delete(t: T) {
         val currentListCount = festivalList.size
-        for (i in festivalList.indices){
-            if (t == festivalList[i].name){
+        for (i in festivalList.indices) {
+            if (t == festivalList[i].name) {
                 festivalList.removeAt(i)
                 break
             }
         }
-        if (currentListCount-1== festivalList.size) {
+        if (currentListCount - 1 == festivalList.size) {
             println("삭제 완료되었습니다")
         } else {
             println("다시 입력해주세요")
         }
     }
 
-    fun abcde(number: Int) {
+
+
+    fun choiceFestivalMenu(number: Int) {
         when (number) {
             1 -> {
                 //입력
@@ -74,26 +76,25 @@ class FestivalManager : FeatureInterface {
                 print("개최일 : ")
                 val festivalDate = ConsoleReader.consoleLineScanner()
                 enroll(Festival(companyName, festivalTitle, festivalDate))
-                serializationArtistFile()
+                serializationFestivalFile()
             }
-
             2 -> {
                 val companyName = ConsoleReader.consoleLineScanner()
                 delete(companyName)
-                serializationArtistFile()
+                serializationFestivalFile()
             }
         }
     }
-        fun deSerializationArtistFile() = runBlocking {
+    fun deSerializationFestivalFile() = runBlocking {
         festivalList = withContext(Dispatchers.IO) {
             ObjectInputStream(FileInputStream("./serialization/festival.ser")).use {
-               it.readObject() as MutableList<Festival>
+                it.readObject() as MutableList<Festival>
             }
         }
-       festivalList
+        festivalList
     }
 
-    fun serializationArtistFile() = runBlocking {
+    fun serializationFestivalFile() = runBlocking {
         val message = withContext(Dispatchers.IO) {
             ObjectOutputStream(FileOutputStream("./serialization/festival.ser")).use {
                 with(it) {
@@ -104,4 +105,6 @@ class FestivalManager : FeatureInterface {
         }
         println(message)
     }
+
 }
+
