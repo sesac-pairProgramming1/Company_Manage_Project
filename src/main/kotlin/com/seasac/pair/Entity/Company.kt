@@ -9,8 +9,8 @@ import java.io.Serializable
  */
 data class Company(
     val name : String,
-    val field : Field?=null,
+    val field : String?=null,
     val representation : String?=null,
     val address : String?=null,
-    val groups : Artist?=null,
+    val groups : String?=null,
 ) : Serializable
