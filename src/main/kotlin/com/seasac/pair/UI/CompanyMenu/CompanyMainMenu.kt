@@ -1,25 +1,40 @@
 package com.seasac.pair.UI.CompanyMenu
 
+import com.seasac.pair.UI.FestivalMenu.showFestivalMainMenu
+import com.seasac.pair.UI.MainMenu.showEndLine
+import common.ConsoleReader
+
 fun showCompanyMainMenu() {
-    println("┌────────────────────────────────────────────────────────────┐")
+    println("┌─────────────────────────────────────────────────────────────────────────────────┐")
     print("│")
-    print(String.format("%30s","회사관리"))
-    println(String.format("%28s","│"))
-    println("├────────────────────────────────────────────────────────────┤")
-    print("│")
-    print(String.format("%31s","1 계열사목록"))
-    println(String.format("%26s","│"))
-    print("│")
-    print(String.format("%31s","2 계열사등록"))
-    println(String.format("%26s","│"))
-    print("│")
-    print(String.format("%31s","3 계열사검색"))
-    println(String.format("%26s","│"))
-    print("│")
-    print(String.format("%31s","4 계열사수정"))
-    println(String.format("%26s","│"))
-    print("│")
-    print(String.format("%31s","5 계열사삭제"))
-    println(String.format("%26s","│"))
-    println("└────────────────────────────────────────────────────────────┘")
+    print(String.format("%40s", "회사 관리"))
+    println(String.format("%39s", "│"))
+    println("└─────────────────────────────────────────────────────────────────────────────────┘")
+    print(String.format("%10s", "1. 계열사 등록"))
+    print(String.format("%10s", "2. 계열사 검색"))
+    print(String.format("%10s", "3. 계열사 수정"))
+    println(String.format("%10s", "4. 계열사 삭제"))
 }
+
+
+fun selectCompanyMainMenu() {
+    var number: Int = 0
+    print("메뉴 선택 : ")
+    number = ConsoleReader.consoleNumberScanner()
+    when (number) {
+        1 ->  {
+            showEndLine()
+            showCompanyMainMenu()
+        }
+        2 -> {
+            showEndLine()
+            showCompanyMainMenu()
+        }
+        3 -> {
+            showEndLine()
+            showFestivalMainMenu()
+        }
+        else -> return
+    }
+}
+
