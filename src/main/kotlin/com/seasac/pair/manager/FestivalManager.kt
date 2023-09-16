@@ -10,7 +10,7 @@ import java.io.*
 
 class FestivalManager : FeatureInterface {
 
-    private var festivalList: MutableList<Festival> = mutableListOf()
+    private var festivalList: MutableList<Festival> = deSerializationArtistFile()
     override fun <T> update(t: T) {
 
     }
@@ -45,14 +45,14 @@ class FestivalManager : FeatureInterface {
         }
     }
 
-    override fun <T> delete(t: T) {
+    override fun<T> delete(t: T) {
         val currentListCount = festivalList.size
-        festivalList.forEachIndexed { index, festival ->
-            if (festival.name == (t as Festival).name) {
-                festivalList.removeAt(index)
-            }
-        }
-        if (currentListCount == festivalList.size - 1) {
+        println("$currentListCount")
+        println(festivalList)
+
+        println("$currentListCount")
+        println(festivalList)
+        if (currentListCount-1== festivalList.size) {
             println("삭제 완료되었습니다")
         } else {
             println("다시 입력해주세요")
@@ -76,25 +76,18 @@ class FestivalManager : FeatureInterface {
 
             2 -> {
                 val companyName = ConsoleReader.consoleLineScanner()
-                delete(Festival(companyName))
+                delete(companyName)
+                serializationArtistFile()
             }
         }
     }
         fun deSerializationArtistFile() = runBlocking {
         festivalList = withContext(Dispatchers.IO) {
             ObjectInputStream(FileInputStream("./serialization/festival.ser")).use {
-                arrayListOf<Festival>().apply {
-                    while (true) {
-                        try {
-                            add(it.readObject() as Festival)
-                        } catch (e: EOFException) {
-                            break
-                        }
-                    }
-                }
+               it.readObject() as MutableList<Festival>
             }
         }
-        println(festivalList.toList())
+       festivalList
     }
 
     fun serializationArtistFile() = runBlocking {

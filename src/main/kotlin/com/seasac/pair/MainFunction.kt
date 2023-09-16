@@ -1,7 +1,6 @@
 package com.seasac.pair
 
 import com.seasac.pair.common.ConsoleReader
-import com.seasac.pair.manager.ArtistManager
 import com.seasac.pair.manager.FestivalManager
 
 
@@ -12,8 +11,8 @@ fun main() {
 
     festivalManager.abcde(number.toInt())
 
-    festivalManager.deSerializationArtistFile()
-
+    val list = festivalManager.deSerializationArtistFile()
+    println(list)
 
 
 
