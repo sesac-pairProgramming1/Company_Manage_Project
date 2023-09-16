@@ -1,6 +1,6 @@
 package com.seasac.pair.UI.GroupMenu
 
-fun showGroupMainMenu() {
+fun showArtistMainMenu() {
     println("┌─────────────────────────────────────────────────────────────────────────────────┐")
     print("│")
     print(String.format("%50s", "그룹 관리"))

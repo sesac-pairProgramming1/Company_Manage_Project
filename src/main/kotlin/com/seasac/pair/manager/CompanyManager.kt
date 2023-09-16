@@ -31,6 +31,7 @@ class CompanyManager : FeatureInterface {
     }
 
     override fun <T> showList() {
+        deSerializationCompanyFile()
         companyList.forEach {
             println(
                 "${it.name} \t\t ${it.field} \t\t ${it.representation} \t\t ${it.address} \t\t" +
@@ -96,7 +97,7 @@ class CompanyManager : FeatureInterface {
                 enroll(companyInput())
                 SerializationCompanyFile()
                 showCompanyMainMenu()
-                deSerializationCompanyFile()
+                showList<Company>()
                 showMenuList()
 
             }
@@ -105,6 +106,9 @@ class CompanyManager : FeatureInterface {
                 print("분야를 입력하세요 : ")
                 val companyField = ConsoleReader.consoleLineScanner()
                 search(companyField)
+                showCompanyMainMenu()
+                showList<Company>()
+                showMenuList()
             }
 
             3 -> {

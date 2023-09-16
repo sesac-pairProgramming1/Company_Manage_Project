@@ -28,6 +28,7 @@ class ArtistManager() : FeatureInterface {
     }
 
     override fun <T> showList() {
+        deSerializationArtistFile()
         artistList.forEach {
             println("${it.name} \t\t ${it.genre} \t\t ${it.debutDate}")
         }
