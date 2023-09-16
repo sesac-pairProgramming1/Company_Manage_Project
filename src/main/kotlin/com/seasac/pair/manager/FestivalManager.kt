@@ -54,4 +54,18 @@ class FestivalManager : FeatureInterface {
             //여기서 라벨을 이용?
         }
     }
+
+    companion object {
+        private var INSTANCE: FestivalManager? = null
+
+        fun initialize() {
+            if (INSTANCE == null) {
+                INSTANCE = FestivalManager()
+            }
+        }
+
+        fun get(): FestivalManager {
+            return INSTANCE ?: throw IllegalStateException("Manager Must be Initialized")
+        }
+    }
 }

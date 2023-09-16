@@ -1,6 +1,7 @@
 package com.seasac.pair.Entity
 
 import common.Field
+import java.io.Serializable
 
 /**
  * Company
@@ -11,5 +12,6 @@ data class Company(
     val field : Field,
     val representation : String,
     val address : String,
-    val groups : MutableList<Artist>,
-)
+    val groups : Artist,
+) : Serializable
+

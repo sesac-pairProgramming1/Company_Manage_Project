@@ -61,4 +61,17 @@ class CompanyManager : FeatureInterface {
         }
     }
 
+    companion object {
+        private var INSTANCE: CompanyManager? = null
+
+        fun initialize() {
+            if (INSTANCE == null) {
+                INSTANCE = CompanyManager()
+            }
+        }
+
+        fun get(): CompanyManager {
+            return INSTANCE ?: throw IllegalStateException("CompanyManager Must be Initialized")
+        }
+    }
 }

@@ -6,35 +6,38 @@ import com.seasac.pair.UI.GroupMenu.showGroupMainMenu
 import common.ConsoleReader
 
 fun showMainMenu() {
-    println("┌────────────────────────────────────────────────────────────┐")
+    println("┌─────────────────────────────────────────────────────────────────────────────────┐")
     print("│")
-    print(String.format("%40s","HYBE Entertainment"))
-    println(String.format("%21s","│"))
-    println("├────────────────────────────────────────────────────────────┤")
-    print("│")
-    print(String.format("%33s","1. 회사 관리"))
-    println(String.format("%25s","│"))
-    print("│")
-    print(String.format("%33s","2. 그룹 관리"))
-    println(String.format("%25s","│"))
-    print("│")
-    print(String.format("%33s","3. 행사 관리"))
-    println(String.format("%25s","│"))
-    print("│")
-    print(String.format("%33s","4. 종료 하기"))
-    println(String.format("%25s","│"))
-    println("└────────────────────────────────────────────────────────────┘")
+    print(String.format("%50s", "HYBE Entertainment"))
+    println(String.format("%32s", "│"))
+    println("└─────────────────────────────────────────────────────────────────────────────────┘")
+    print(String.format("%25s", "1. 계열사관리"))
+    print(String.format("%10s", "2. 그룹 관리"))
+    print(String.format("%10s", "3. 행사 관리"))
+    println(String.format("%10s", "4. 종료 하기"))
     selectMainMenu()
-}
 
+}
+fun showEndLine() {
+    println("===================================================================================")
+}
 fun selectMainMenu() {
-    var number : Int =0
-    print("원하는 번호를 입력해주세요 : ")
-    number=ConsoleReader.consoleNumberScanner()
-    when(number) {
-        1-> showCompanyMainMenu()
-        2-> showGroupMainMenu()
-        3-> showFestivalMainMenu()
+    var number: Int = 0
+    print("메뉴 선택 : ")
+    number = ConsoleReader.consoleNumberScanner()
+    when (number) {
+        1 ->  {
+            showEndLine()
+            showCompanyMainMenu()
+        }
+        2 -> {
+            showEndLine()
+            showCompanyMainMenu()
+        }
+        3 -> {
+            showEndLine()
+            showFestivalMainMenu()
+        }
         else -> return
     }
 }

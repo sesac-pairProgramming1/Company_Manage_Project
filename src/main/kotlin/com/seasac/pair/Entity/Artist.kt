@@ -1,6 +1,7 @@
 package com.seasac.pair.Entity
 
 import common.Genre
+import java.io.Serializable
 
 /**
  * Artist
@@ -11,4 +12,4 @@ data class Artist(
     val name : String,
     val genre : Genre,
     val debutDate : String,
-)
+) : Serializable

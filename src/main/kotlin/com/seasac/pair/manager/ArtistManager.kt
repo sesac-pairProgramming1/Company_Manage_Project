@@ -54,4 +54,18 @@ class ArtistManager() : FeatureInterface {
             //여기서 라벨을 이용?
         }
     }
+
+    companion object {
+        private var INSTANCE : ArtistManager? =null
+
+        fun initialize() {
+            if(INSTANCE==null) {
+                INSTANCE= ArtistManager()
+            }
+        }
+        fun get() : ArtistManager {
+            return INSTANCE ?:
+            throw IllegalStateException("ArtistManager Must be Initialized")
+        }
+    }
 }
