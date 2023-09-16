@@ -9,7 +9,6 @@ class CompanyManager : FeatureInterface {
 
     private val companyList: MutableList<Company> = mutableListOf()
 
-
     override fun <T> update(t: T) {
 
     }

@@ -6,7 +6,10 @@ import com.seasac.pair.common.ConsoleReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import java.io.*
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 
 class FestivalManager : FeatureInterface {
 
@@ -45,18 +48,18 @@ class FestivalManager : FeatureInterface {
         }
     }
 
-    override fun<T> delete(t: T) {
+    override fun<T> delete(t: T){
         val currentListCount = festivalList.size
-        println("$currentListCount")
-        println(festivalList)
-
-        println("$currentListCount")
-        println(festivalList)
+        for (i in festivalList.indices){
+            if (t == festivalList[i].name){
+                festivalList.removeAt(i)
+                break
+            }
+        }
         if (currentListCount-1== festivalList.size) {
             println("삭제 완료되었습니다")
         } else {
             println("다시 입력해주세요")
-            //여기서 라벨을 이용?
         }
     }
 
