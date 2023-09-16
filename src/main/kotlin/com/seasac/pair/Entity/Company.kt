@@ -11,5 +11,5 @@ data class Company(
     val field : Field,
     val representation : String,
     val address : String,
-    val groups : MutableList<Artist>,
+    val groups : Artist,
 )
