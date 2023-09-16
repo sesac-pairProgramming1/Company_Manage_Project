@@ -1,6 +1,6 @@
 package com.seasac.pair.Entity
 
-import common.Field
+import com.seasac.pair.common.Field
 
 /**
  * Company

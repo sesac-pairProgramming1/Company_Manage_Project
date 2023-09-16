@@ -1,6 +1,6 @@
 package com.seasac.pair.Entity
 
-import common.Genre
+import com.seasac.pair.common.Genre
 
 /**
  * Artist

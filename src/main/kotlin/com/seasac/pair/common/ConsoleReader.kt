@@ -1,4 +1,4 @@
-package common
+package com.seasac.pair.common
 
 import java.util.Scanner
 
