@@ -103,7 +103,6 @@ class FestivalManager : FeatureInterface {
                 }
             }
         }
-        println(message)
     }
 
 }

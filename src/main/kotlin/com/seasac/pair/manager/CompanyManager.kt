@@ -19,8 +19,8 @@ class CompanyManager : FeatureInterface {
 
     override fun <T> update(t: T) {
         var index = 0
-        for (i in companyList.indices){
-            if (t == companyList[i].name){
+        for (i in companyList.indices) {
+            if (t == companyList[i].name) {
                 index = i
                 break
             }
@@ -53,28 +53,27 @@ class CompanyManager : FeatureInterface {
                 )
             }
         }
-        if (!existFlag){
+        if (!existFlag) {
             println("일치하는 결과가 없습니다.")
         }
     }
 
     override fun <T> delete(t: T) {
         val currentListCount = companyList.size
-        for (i in companyList.indices){
-            if (t == companyList[i].name){
+        for (i in companyList.indices) {
+            if (t == companyList[i].name) {
                 companyList.removeAt(i)
                 break
             }
         }
-        if (currentListCount-1== companyList.size) {
+        if (currentListCount - 1 == companyList.size) {
             println("삭제 완료되었습니다")
         } else {
             println("다시 입력해주세요")
         }
     }
 
-    fun companyInput() : Company{
-
+    fun companyInput(): Company {
         print("회사이름 : ")
         val companyName = ConsoleReader.consoleLineScanner()
         print("분야 : ")
@@ -93,8 +92,9 @@ class CompanyManager : FeatureInterface {
             1 -> {
                 //입력
                 enroll(companyInput())
-                SerializationCompanyFile()
+                serializationCompanyFile()
             }
+
             2 -> {
                 print("분야를 입력하세요 : ")
                 val companyField = ConsoleReader.consoleLineScanner()
@@ -103,19 +103,20 @@ class CompanyManager : FeatureInterface {
 
             3 -> {
                 print("수정할 회사명 : ")
-                val companyName =  ConsoleReader.consoleLineScanner()
+                val companyName = ConsoleReader.consoleLineScanner()
                 update(companyName)
-                SerializationCompanyFile()
+                serializationCompanyFile()
             }
 
             4 -> {
                 print("삭제할 회사명 : ")
                 val companyName = ConsoleReader.consoleLineScanner()
                 delete(companyName)
-                SerializationCompanyFile()
+                serializationCompanyFile()
             }
         }
     }
+
     fun deSerializationCompanyFile() = runBlocking {
         companyList = withContext(Dispatchers.IO) {
             ObjectInputStream(FileInputStream("./serialization/company.ser")).use {
@@ -125,7 +126,7 @@ class CompanyManager : FeatureInterface {
         companyList
     }
 
-    fun SerializationCompanyFile() = runBlocking {
+    fun serializationCompanyFile() = runBlocking {
         val message = withContext(Dispatchers.IO) {
             ObjectOutputStream(FileOutputStream("./serialization/company.ser")).use {
                 with(it) {
@@ -135,6 +136,5 @@ class CompanyManager : FeatureInterface {
             }
         }
     }
-
 }
 
