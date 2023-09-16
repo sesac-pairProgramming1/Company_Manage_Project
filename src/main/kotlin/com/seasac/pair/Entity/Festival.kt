@@ -8,7 +8,7 @@ import java.io.Serializable
  */
 data class Festival(
     // PrimaryKey
-    val name : Company,
+    val name : String,
     val title : String,
     val enrolledDate : String,
 ) : Serializable

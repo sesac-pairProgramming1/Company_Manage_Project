@@ -1,6 +1,5 @@
 package com.seasac.pair.Entity
 
-import common.Field
 import java.io.Serializable
 
 /**
@@ -9,9 +8,9 @@ import java.io.Serializable
  */
 data class Company(
     val name : String,
-    val field : Field,
+    val field : String,
     val representation : String,
     val address : String,
-    val groups : Artist,
+    val group : String,
 ) : Serializable
 

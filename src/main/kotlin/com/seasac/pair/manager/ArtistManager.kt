@@ -2,10 +2,18 @@ package com.seasac.pair.manager
 
 import com.seasac.pair.Entity.Artist
 import com.seasac.pair.FeatureInterface
+import common.ConsoleReader
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 
 class ArtistManager() : FeatureInterface {
 
-    private val artistList: MutableList<Artist> = mutableListOf()
+    private var artistList: MutableList<Artist> = mutableListOf()
     override fun <T> update(t: T) {
 
     }
@@ -42,9 +50,10 @@ class ArtistManager() : FeatureInterface {
 
     override fun <T> delete(t: T) {
         val currentListCount = artistList.size
-        artistList.forEachIndexed { index, artist ->
-            if (artist.name == (t as Artist).name) {
-                artistList.removeAt(index)
+        for(i in artistList.indices) {
+            if (artistList[i].name==t as String) {
+                artistList.removeAt(i)
+                break
             }
         }
         if (currentListCount == artistList.size - 1) {
@@ -54,6 +63,55 @@ class ArtistManager() : FeatureInterface {
             //여기서 라벨을 이용?
         }
     }
+    fun choiceArtistMenu(number: Int) {
+        when (number) {
+            1 -> {
+                print("가수 이름 입력 : ")
+                val companyName = ConsoleReader.consoleLineScanner()
+                print("장르 입력 : ")
+                val artistGenre = ConsoleReader.consoleLineScanner()
+                print("데뷔날짜 입력 : ")
+                val festivalDate = ConsoleReader.consoleLineScanner()
+                enroll(Artist(companyName, artistGenre, festivalDate))
+                serializationArtistFile()
+            }
+
+            2 -> {
+                val companyName = ConsoleReader.consoleLineScanner()
+                delete(companyName)
+                serializationArtistFile()
+            }
+            3-> {
+                print("수정할 가수의 이름을 입력 : ")
+                val existName=ConsoleReader.consoleLineScanner()
+
+            }
+            4 -> {
+
+            }
+        }
+    }
+    fun deSerializationArtistFile() = runBlocking {
+        artistList = withContext(Dispatchers.IO) {
+            ObjectInputStream(FileInputStream("./serialization/festival.ser")).use {
+                it.readObject() as MutableList<Artist>
+            }
+        }
+        artistList
+    }
+
+    fun serializationArtistFile() = runBlocking {
+        val message = withContext(Dispatchers.IO) {
+            ObjectOutputStream(FileOutputStream("./serialization/festival.ser")).use {
+                with(it) {
+                    writeObject(artistList)
+                    flush()
+                }
+            }
+        }
+        println(message)
+    }
+
 
     companion object {
         private var INSTANCE : ArtistManager? =null
@@ -61,11 +119,10 @@ class ArtistManager() : FeatureInterface {
         fun initialize() {
             if(INSTANCE==null) {
                 INSTANCE= ArtistManager()
+            } else {
+                println("이미 초기화 되었습니다.")
             }
-        }
-        fun get() : ArtistManager {
-            return INSTANCE ?:
-            throw IllegalStateException("ArtistManager Must be Initialized")
         }
     }
 }
+
