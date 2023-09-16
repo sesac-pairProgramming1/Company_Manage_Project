@@ -32,7 +32,7 @@ class CompanyManager : FeatureInterface {
         companyList.forEach {
             println(
                 "${it.name} \t\t ${it.field} \t\t ${it.representation} \t\t ${it.address} \t\t" +
-                        "${it.groups}"
+                        "${it.group}"
             )
         }
     }
@@ -49,7 +49,7 @@ class CompanyManager : FeatureInterface {
                 println(
                     "검색 결과 : ${companyList[index].name} \t\t" +
                             " ${companyList[index].field} \t\t ${companyList[index].representation} \t\t" +
-                            "${companyList[index].address} \t\t ${companyList[index].groups}"
+                            "${companyList[index].address} \t\t ${companyList[index].group}"
                 )
             }
         }
