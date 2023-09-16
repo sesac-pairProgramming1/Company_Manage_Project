@@ -1,18 +1,19 @@
 package com.seasac.pair
 
 import com.seasac.pair.common.ConsoleReader
-import com.seasac.pair.manager.ArtistManager
+import com.seasac.pair.manager.CompanyManager
 import com.seasac.pair.manager.FestivalManager
 
 
 fun main() {
 //    var line : String? = ConsoleReader.consoleLineScanner()
-    val festivalManager = FestivalManager()
+    val companyManager = CompanyManager()
     val number : String= ConsoleReader.consoleLineScanner()
 
-    festivalManager.abcde(number.toInt())
+    companyManager.choiceCompanyMenu(number.toInt())
+    val list = companyManager.deSerializationCompanyFile()
+    println(list)
 
-    festivalManager.deSerializationArtistFile()
 
 
 

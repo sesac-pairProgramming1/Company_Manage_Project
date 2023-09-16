@@ -6,11 +6,14 @@ import com.seasac.pair.common.ConsoleReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import java.io.*
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 
 class FestivalManager : FeatureInterface {
 
-    private var festivalList: MutableList<Festival> = mutableListOf()
+    private var festivalList: MutableList<Festival> = deSerializationFestivalFile()
     override fun <T> update(t: T) {
 
     }
@@ -47,20 +50,22 @@ class FestivalManager : FeatureInterface {
 
     override fun <T> delete(t: T) {
         val currentListCount = festivalList.size
-        festivalList.forEachIndexed { index, festival ->
-            if (festival.name == (t as Festival).name) {
-                festivalList.removeAt(index)
+        for (i in festivalList.indices) {
+            if (t == festivalList[i].name) {
+                festivalList.removeAt(i)
+                break
             }
         }
-        if (currentListCount == festivalList.size - 1) {
+        if (currentListCount - 1 == festivalList.size) {
             println("삭제 완료되었습니다")
         } else {
             println("다시 입력해주세요")
-            //여기서 라벨을 이용?
         }
     }
 
-    fun abcde(number: Int) {
+
+
+    fun choiceFestivalMenu(number: Int) {
         when (number) {
             1 -> {
                 //입력
@@ -71,33 +76,25 @@ class FestivalManager : FeatureInterface {
                 print("개최일 : ")
                 val festivalDate = ConsoleReader.consoleLineScanner()
                 enroll(Festival(companyName, festivalTitle, festivalDate))
-                serializationArtistFile()
+                serializationFestivalFile()
             }
-
             2 -> {
                 val companyName = ConsoleReader.consoleLineScanner()
-                delete(Festival(companyName))
+                delete(companyName)
+                serializationFestivalFile()
             }
         }
     }
-        fun deSerializationArtistFile() = runBlocking {
+    fun deSerializationFestivalFile() = runBlocking {
         festivalList = withContext(Dispatchers.IO) {
             ObjectInputStream(FileInputStream("./serialization/festival.ser")).use {
-                arrayListOf<Festival>().apply {
-                    while (true) {
-                        try {
-                            add(it.readObject() as Festival)
-                        } catch (e: EOFException) {
-                            break
-                        }
-                    }
-                }
+                it.readObject() as MutableList<Festival>
             }
         }
-        println(festivalList.toList())
+        festivalList
     }
 
-    fun serializationArtistFile() = runBlocking {
+    fun serializationFestivalFile() = runBlocking {
         val message = withContext(Dispatchers.IO) {
             ObjectOutputStream(FileOutputStream("./serialization/festival.ser")).use {
                 with(it) {
@@ -108,4 +105,6 @@ class FestivalManager : FeatureInterface {
         }
         println(message)
     }
+
 }
+
