@@ -1,0 +1,25 @@
+package com.seasac.pair.UI.CompanyMenu
+
+fun showCompanyMainMenu() {
+    println("┌────────────────────────────────────────────────────────────┐")
+    print("│")
+    print(String.format("%30s","회사관리"))
+    println(String.format("%28s","│"))
+    println("├────────────────────────────────────────────────────────────┤")
+    print("│")
+    print(String.format("%31s","1 계열사목록"))
+    println(String.format("%26s","│"))
+    print("│")
+    print(String.format("%31s","2 계열사등록"))
+    println(String.format("%26s","│"))
+    print("│")
+    print(String.format("%31s","3 계열사검색"))
+    println(String.format("%26s","│"))
+    print("│")
+    print(String.format("%31s","4 계열사수정"))
+    println(String.format("%26s","│"))
+    print("│")
+    print(String.format("%31s","5 계열사삭제"))
+    println(String.format("%26s","│"))
+    println("└────────────────────────────────────────────────────────────┘")
+}
