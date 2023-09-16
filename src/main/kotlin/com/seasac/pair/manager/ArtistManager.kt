@@ -15,14 +15,17 @@ class ArtistManager() : FeatureInterface {
 
     private var artistList: MutableList<Artist> = mutableListOf()
     override fun <T> update(t: T) {
-
-    }
-
-    override fun <T> showList() {
-        artistList.forEach {
-            println("${it.name} \t\t ${it.genre} \t\t ${it.debutDate}")
+        var index=0
+        for (i in artistList.indices) {
+            if (t==artistList[i].name) {
+                index=i
+                break
+            }
         }
+        artistList[index]=artistData()
     }
+
+    override fun <T> showList() { }
 
     override fun <T> enroll(t: T) {
         artistList.add(t as Artist)
@@ -30,21 +33,16 @@ class ArtistManager() : FeatureInterface {
 
     override fun <T> search(t: T) {
         var existFlag: Boolean = false
-        var existIndex = 0
         artistList.forEachIndexed { index, artist ->
-            if (artist == t as Artist) {
+            if (artist.name == t as String) {
                 existFlag = true
-                existIndex = index
+                println(
+                    "검색 결과 : ${artistList[index].name} \t\t" +
+                            " ${artistList[index].genre} \t\t ${artistList[index].debutDate}")
             }
         }
-        if (existFlag) {
-            println(
-                "검색 결과 : ${artistList[existIndex].name} \t\t" +
-                        " ${artistList[existIndex].genre} \t\t ${artistList[existIndex].debutDate}"
-            )
-        } else {
-            println("일치하는 결과가 없습니다.")
-            // Label 이용?
+        if (!existFlag) {
+            println("일치하는 결과가 없습니다")
         }
     }
 
@@ -56,7 +54,7 @@ class ArtistManager() : FeatureInterface {
                 break
             }
         }
-        if (currentListCount == artistList.size - 1) {
+        if (currentListCount-1 == artistList.size) {
             println("삭제 완료되었습니다")
         } else {
             println("다시 입력해주세요")
@@ -66,19 +64,14 @@ class ArtistManager() : FeatureInterface {
     fun choiceArtistMenu(number: Int) {
         when (number) {
             1 -> {
-                print("가수 이름 입력 : ")
-                val companyName = ConsoleReader.consoleLineScanner()
-                print("장르 입력 : ")
-                val artistGenre = ConsoleReader.consoleLineScanner()
-                print("데뷔날짜 입력 : ")
-                val festivalDate = ConsoleReader.consoleLineScanner()
-                enroll(Artist(companyName, artistGenre, festivalDate))
+
+                enroll(artistData())
                 serializationArtistFile()
             }
 
             2 -> {
-                val companyName = ConsoleReader.consoleLineScanner()
-                delete(companyName)
+                val artistName = ConsoleReader.consoleLineScanner()
+                delete(artistName)
                 serializationArtistFile()
             }
             3-> {
@@ -91,6 +84,17 @@ class ArtistManager() : FeatureInterface {
             }
         }
     }
+    fun artistData() : Artist{
+        print("가수 이름 입력 : ")
+        val artistName = ConsoleReader.consoleLineScanner()
+        print("장르 입력 : ")
+        val artistGenre = ConsoleReader.consoleLineScanner()
+        print("데뷔날짜 입력 : ")
+        val debutDate = ConsoleReader.consoleLineScanner()
+
+        return Artist(artistName,artistGenre,debutDate)
+    }
+
     fun deSerializationArtistFile() = runBlocking {
         artistList = withContext(Dispatchers.IO) {
             ObjectInputStream(FileInputStream("./serialization/festival.ser")).use {

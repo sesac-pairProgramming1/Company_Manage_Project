@@ -17,7 +17,14 @@ class CompanyManager : FeatureInterface {
 
     private var companyList: MutableList<Company> = mutableListOf()
     override fun <T> update(t: T) {
-
+        var index=0
+        for (i in companyList.indices) {
+            if (t==companyList[i].name) {
+                index=i
+                break
+            }
+        }
+        companyList[index]=companyInput()
     }
 
     override fun <T> showList() {
@@ -35,22 +42,18 @@ class CompanyManager : FeatureInterface {
 
     override fun <T> search(t: T) {
         var existFlag: Boolean = false
-        var existIndex = 0
         companyList.forEachIndexed { index, company ->
-            if (company == t as Company) {
+            if (company.field == t as String) {
                 existFlag = true
-                existIndex = index
+                println(
+                    "검색 결과 : ${companyList[index].name} \t\t" +
+                            " ${companyList[index].field} \t\t ${companyList[index].representation} \t\t" +
+                            "${companyList[index].address} \t\t ${companyList[index].group}"
+                )
             }
         }
         if (existFlag) {
-            println(
-                "검색 결과 : ${companyList[existIndex].name} \t\t" +
-                        " ${companyList[existIndex].field} \t\t ${companyList[existIndex].representation} \t\t" +
-                        "${companyList[existIndex].address} \t\t ${companyList[existIndex].group}"
-            )
-        } else {
-            println("일치하는 결과가 없습니다.")
-            // Label 이용?
+            println("일치하는 결과가 없습니다")
         }
     }
 
@@ -62,7 +65,7 @@ class CompanyManager : FeatureInterface {
                 break
             }
         }
-        if (currentListCount == companyList.size - 1) {
+        if (currentListCount-1 == companyList.size) {
             println("삭제 완료되었습니다")
         } else {
             println("다시 입력해주세요")
@@ -70,11 +73,26 @@ class CompanyManager : FeatureInterface {
         }
     }
 
+    fun companyInput() : Company{
+
+        print("회사이름 : ")
+        val companyName = ConsoleReader.consoleLineScanner()
+        print("분야 : ")
+        val companyField = ConsoleReader.consoleLineScanner()
+        print("대표 : ")
+        val companyRepresentation = ConsoleReader.consoleLineScanner()
+        print("장소 : ")
+        val companyAddress = ConsoleReader.consoleLineScanner()
+        print("아티스트 : ")
+        val companyGroup = ConsoleReader.consoleLineScanner()
+        return Company(companyName, companyField, companyRepresentation, companyAddress, companyGroup)
+    }
+
     fun choiceFestivalMenu(number: Int) {
         when (number) {
             1 -> {
                 //입력
-                enroll(requestFullData())
+                enroll(companyInput())
                 serializationCompanyFile()
             }
 
@@ -105,21 +123,6 @@ class CompanyManager : FeatureInterface {
             }
         }
         println(message)
-    }
-
-    fun requestFullData() : Company {
-        print("회사 이름 : ")
-        val companyName = ConsoleReader.consoleLineScanner()
-        print("회사 분야 : ")
-        val companyField = ConsoleReader.consoleLineScanner()
-        print("대표 : ")
-        val representation = ConsoleReader.consoleLineScanner()
-        print("주소 : ")
-        val address = ConsoleReader.consoleLineScanner()
-        print("대표 그룹 : ")
-        val mainGroup = ConsoleReader.consoleLineScanner()
-
-        return Company(companyName,companyField,representation,address,mainGroup)
     }
 
     companion object {

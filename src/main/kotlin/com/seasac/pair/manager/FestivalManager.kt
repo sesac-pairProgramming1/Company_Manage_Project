@@ -14,39 +14,15 @@ import java.io.ObjectOutputStream
 class FestivalManager  : FeatureInterface {
 
     private var festivalList: MutableList<Festival> = deSerializationFestivalFile()
-    override fun <T> update(t: T) {
+    override fun <T> update(t: T) { }
 
-    }
-
-    override fun <T> showList() {
-        festivalList.forEach {
-            println("${it.name} \t\t ${it.title} \t\t ${it.enrolledDate}")
-        }
-    }
+    override fun <T> showList() { }
 
     override fun <T> enroll(t: T) {
         festivalList.add(t as Festival)
     }
 
-    override fun <T> search(t: T) {
-        var existFlag: Boolean = false
-        var existIndex = 0
-        festivalList.forEachIndexed { index, festival ->
-            if (festival == t as Festival) {
-                existFlag = true
-                existIndex = index
-            }
-        }
-        if (existFlag) {
-            println(
-                "검색 결과 : ${festivalList[existIndex].name} \t\t" +
-                        " ${festivalList[existIndex].title} \t\t ${festivalList[existIndex].enrolledDate}"
-            )
-        } else {
-            println("일치하는 결과가 없습니다.")
-            // Label 이용?
-        }
-    }
+    override fun <T> search(t: T) {}
 
     override fun <T> delete(t: T) {
         val currentListCount = festivalList.size
@@ -56,7 +32,7 @@ class FestivalManager  : FeatureInterface {
                break
            }
        }
-        if (currentListCount == festivalList.size - 1) {
+        if (currentListCount-1== festivalList.size) {
             println("삭제 완료되었습니다")
         } else {
             println("다시 입력해주세요")
@@ -81,9 +57,6 @@ class FestivalManager  : FeatureInterface {
                 val companyName = ConsoleReader.consoleLineScanner()
                 delete(companyName)
                 serializationFestivalFile()
-            }
-            3-> {
-
             }
         }
     }

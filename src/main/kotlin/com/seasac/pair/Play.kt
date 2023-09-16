@@ -10,6 +10,4 @@ fun play() {
    val festivalManager=FestivalManager.initialize()
 
 
-
-
 }
