@@ -10,5 +10,6 @@ fun main() {
 //    showCompanyMainMenu()
 //    showGroupMainMenu()
 //    showFestivalMainMenu()
+    println("hi")
 
 }
