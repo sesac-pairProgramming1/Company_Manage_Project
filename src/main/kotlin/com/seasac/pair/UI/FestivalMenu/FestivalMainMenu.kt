@@ -2,7 +2,7 @@ package com.seasac.pair.UI.FestivalMenu
 
 import com.seasac.pair.UI.CompanyMenu.showCompanyMainMenu
 import com.seasac.pair.UI.MainMenu.showEndLine
-import common.ConsoleReader
+import com.seasac.pair.common.ConsoleReader
 
 fun showFestivalMainMenu() {
     println("┌─────────────────────────────────────────────────────────────────────────────────┐")

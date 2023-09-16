@@ -2,6 +2,8 @@ package com.seasac.pair.manager
 
 import com.seasac.pair.Entity.Company
 import com.seasac.pair.FeatureInterface
+import com.seasac.pair.UI.CompanyMenu.showCompanyMainMenu
+import com.seasac.pair.UI.CompanyMenu.showMenuList
 import com.seasac.pair.common.ConsoleReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -93,6 +95,10 @@ class CompanyManager : FeatureInterface {
                 //입력
                 enroll(companyInput())
                 SerializationCompanyFile()
+                showCompanyMainMenu()
+                deSerializationCompanyFile()
+                showMenuList()
+
             }
 
             2 -> {
@@ -136,5 +142,20 @@ class CompanyManager : FeatureInterface {
             }
         }
     }
+
+
+    companion object {
+        private var INSTANCE: CompanyManager? = null
+
+        fun initialize() {
+            if (CompanyManager.INSTANCE == null) {
+                CompanyManager.INSTANCE = CompanyManager()
+            } else {
+                println("이미 초기화 되었습니다.")
+            }
+        }
+    }
+
+
 
 }

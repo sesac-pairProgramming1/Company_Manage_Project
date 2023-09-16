@@ -128,6 +128,17 @@ class ArtistManager() : FeatureInterface {
             }
         }
     }
+    companion object {
+        private var INSTANCE : ArtistManager? =null
+
+        fun initialize() {
+            if(INSTANCE==null) {
+                INSTANCE= ArtistManager()
+            } else {
+                println("이미 초기화 되었습니다.")
+            }
+        }
+    }
 }
 
 

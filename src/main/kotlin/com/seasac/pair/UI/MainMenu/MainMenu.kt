@@ -24,7 +24,7 @@ fun showEndLine() {
 fun selectMainMenu() {
     var number: Int = 0
     print("메뉴 선택 : ")
-    number = ConsoleReader.consoleNumberScanner()
+    number = ConsoleReader.consoleLineScanner().toInt()
     when (number) {
         1 ->  {
             showEndLine()

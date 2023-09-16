@@ -7,15 +7,7 @@ import com.seasac.pair.manager.CompanyManager
 import com.seasac.pair.manager.FestivalManager
 
 
-fun play() {
-    val artistManager=ArtistManager()
-    val companyManager=CompanyManager()
-    val festivalManager=FestivalManager()
 
-    showMainMenu()
-    selectMainMenu()
-
-}
 
 fun main() {
 //    var line : String? = ConsoleReader.consoleLineScanner()

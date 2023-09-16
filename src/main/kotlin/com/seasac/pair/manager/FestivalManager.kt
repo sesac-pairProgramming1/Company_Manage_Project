@@ -104,6 +104,15 @@ class FestivalManager : FeatureInterface {
             }
         }
     }
-
+    companion object {
+        private var INSTANCE: FestivalManager? = null
+        fun initialize() {
+            if(FestivalManager.INSTANCE ==null) {
+                FestivalManager.INSTANCE = FestivalManager()
+            } else {
+                println("이미 초기화 되었습니다.")
+            }
+        }
+    }
 }
 
