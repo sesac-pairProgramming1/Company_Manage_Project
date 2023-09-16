@@ -8,6 +8,8 @@ class CompanyManager : FeatureInterface {
     // 반복되는 코드가 조금 많은 것 같다 (Manager 별로 코드 흐름이 같다)
 
     private val companyList: MutableList<Company> = mutableListOf()
+
+
     override fun <T> update(t: T) {
 
     }
