@@ -9,9 +9,7 @@ fun showCompanyMain() {
     val companyManager=CompanyManager()
     while (true) {
     println("┌─────────────────────────────────────────────────────────────────────────────────┐")
-    print("│")
-    print(String.format("%40s", "회사 관리"))
-    println(String.format("%39s", "│"))
+    println(String.format("%40s", "회사 관리"))
     println("└─────────────────────────────────────────────────────────────────────────────────┘")
 
 

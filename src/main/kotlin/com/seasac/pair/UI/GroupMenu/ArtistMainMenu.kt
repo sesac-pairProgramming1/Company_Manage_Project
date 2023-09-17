@@ -9,9 +9,7 @@ fun showArtistMain() {
     val artistManager= ArtistManager()
     while (true) {
         println("┌─────────────────────────────────────────────────────────────────────────────────┐")
-        print("│")
-        print(String.format("%40s", "가수 관리"))
-        println(String.format("%39s", "│"))
+        println(String.format("%40s", "가수 관리"))
         println("└─────────────────────────────────────────────────────────────────────────────────┘")
 
 

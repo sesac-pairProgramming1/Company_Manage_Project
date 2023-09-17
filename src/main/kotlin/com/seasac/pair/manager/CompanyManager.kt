@@ -38,7 +38,7 @@ class CompanyManager : FeatureInterface {
         println("└─────────────────────────────────────────────────────────────────────────────────┘")
         companyList.forEach {
             println(
-                "\t  ${it.name}  \t \t\t  ${it.field}  \t \t  ${it.representation}  \t\t ${it.address}\t" +
+                "\t  ${it.name}  \t\t  ${it.field}  \t \t  ${it.representation}  \t\t ${it.address}\t" +
                         "\t\t${it.group}"
             )
         }
@@ -49,18 +49,24 @@ class CompanyManager : FeatureInterface {
     }
 
     override fun <T> search(t: T) {
+        println("┌─────────────────────────────────────────────────────────────────────────────────┐")
+        println(String.format("%40s", "검색결과"))
+        println("└─────────────────────────────────────────────────────────────────────────────────┘")
+        println("┌─────────────────────────────────────────────────────────────────────────────────┐")
+        println("\t  회사 이름  \t │ \t  사업명  \t │ \t  대표  \t │ \t    주소    \t │ \t  대표가수 ")
+        println("└─────────────────────────────────────────────────────────────────────────────────┘")
         val newList= companyList.asSequence().filterIndexed { index, company ->
             company.field!!.startsWith(t as String)
         }.map {
             println(
-                "검색 결과 : ${it.name} \t\t" +
-                        " ${it.field} \t\t ${it.representation} \t\t" +
-                        "${it.address} \t\t ${it.group}"
+                "\t  ${it.name}  \t\t  ${it.field}  \t \t  ${it.representation}  \t\t ${it.address}\t" +
+                        "\t\t${it.group}"
             )
         }.toList()
         if (newList.isEmpty()) {
             println("검색결과가 없습니다")
         }
+        Thread.sleep(3000)
     }
 
     override fun <T> delete(t: T) {
@@ -156,7 +162,4 @@ class CompanyManager : FeatureInterface {
             }
         }
     }
-
-
-
 }

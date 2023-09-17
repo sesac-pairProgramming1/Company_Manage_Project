@@ -43,6 +43,12 @@ class ArtistManager() : FeatureInterface {
     }
 
     override fun <T> search(t: T) {
+        println("┌─────────────────────────────────────────────────────────────────────────────────┐")
+        println(String.format("%40s", "검색결과"))
+        println("└─────────────────────────────────────────────────────────────────────────────────┘")
+        println("┌─────────────────────────────────────────────────────────────────────────────────┐")
+        println("\t\t 가수 이름 \t\t\t│ \t\t\t 장르 \t\t\t │ \t\t\t 데뷔일 ")
+        println("└─────────────────────────────────────────────────────────────────────────────────┘")
         val newList= artistList.asSequence().filterIndexed { index, artist ->
             artist.genre!!.startsWith(t as String)
         }.map {

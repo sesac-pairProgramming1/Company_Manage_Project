@@ -61,7 +61,6 @@ class FestivalManager : FeatureInterface {
     }
 
 
-
     fun choiceFestivalMenu(number: Int) {
         when (number) {
             1 -> {
