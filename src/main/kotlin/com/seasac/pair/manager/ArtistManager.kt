@@ -17,14 +17,14 @@ class ArtistManager() : FeatureInterface {
     var artistList: MutableList<Artist> = deSerializationArtistFile()
 
     override fun <T> update(t: T) {
-        var index = 0
+        var index = -1
         for (i in artistList.indices) {
             if (t == artistList[i].name) {
                 index = i
                 break
             }
         }
-        artistList[index] = artistInput()
+        if (index != -1) artistList[index] = artistInput() else println("해당하는 아티스트가 없습니다.")
     }
 
     override fun showList() {
@@ -34,7 +34,7 @@ class ArtistManager() : FeatureInterface {
         println("\t\t 가수 이름 \t\t\t│ \t\t\t 장르 \t\t\t │ \t\t\t 데뷔일 ")
         println("└─────────────────────────────────────────────────────────────────────────────────┘")
         artistList.forEach {
-            println("\t\t ${it.name} \t\t\t\t \t\t\t ${it.genre} \t\t\t \t\t${it.debutDate}")
+            println("\t\t ${it.name} \t\t\t\t \t\t ${it.genre} \t\t\t \t\t${it.debutDate}")
         }
     }
 
@@ -52,20 +52,18 @@ class ArtistManager() : FeatureInterface {
         val newList= artistList.asSequence().filterIndexed { index, artist ->
             artist.genre!!.startsWith(t as String)
         }.map {
-            println(
-                "검색 결과 : ${it.name} \t\t" +
-                        " ${it.genre} \t\t ${it.debutDate} \t\t"
-            )
+            println("\t\t ${it.name} \t\t\t\t \t\t ${it.genre} \t\t\t \t\t${it.debutDate}")
         }.toList()
         if (newList.isEmpty()) {
             println("검색결과가 없습니다")
         }
+        Thread.sleep(3000)
     }
 
     override fun <T> delete(t: T) {
         val currentListCount = artistList.size
         for (i in artistList.indices) {
-            if (t == artistList[i].name) {
+            if (artistList[i].name.equals(t as String,true)) {
                 artistList.removeAt(i)
                 break
             }
@@ -82,7 +80,7 @@ class ArtistManager() : FeatureInterface {
         val artistName = ConsoleReader.consoleLineScanner()
         print("장르 : ")
         val artistGenre = ConsoleReader.consoleLineScanner()
-        print("데뷔날짜 : ")
+        print("데뷔날짜 ex)2000.01.01 : ")
         val artistDebutDate = ConsoleReader.consoleLineScanner()
         return Artist(artistName,artistGenre,artistDebutDate)
     }

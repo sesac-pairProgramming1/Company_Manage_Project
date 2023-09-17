@@ -4,7 +4,7 @@ import java.io.Serializable
 
 /**
  * Festival
- * @property name : PrimaryKey
+ * @property title : PrimaryKey
  */
 data class Festival(
     // PrimaryKey

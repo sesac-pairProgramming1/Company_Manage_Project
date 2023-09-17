@@ -23,7 +23,7 @@ class FestivalManager : FeatureInterface {
         println("\t\t 주최 회사 \t\t\t│ \t\t\t 행사내용 \t\t\t │ \t\t 행사일 ")
         println("└─────────────────────────────────────────────────────────────────────────────────┘")
         festivalList.forEach {
-            println("\t\t ${it.name} \t\t\t\t \t\t\t ${it.title} \t\t\t \t\t ${it.festivalDate}")
+            println("\t\t ${it.name} \t\t\t\t ${it.title} \t\t\t \t\t ${it.festivalDate}")
         }
     }
 
@@ -32,23 +32,27 @@ class FestivalManager : FeatureInterface {
     }
 
     override fun <T> search(t: T) {
+        println("┌─────────────────────────────────────────────────────────────────────────────────┐")
+        println(String.format("%40s", "검색결과"))
+        println("└─────────────────────────────────────────────────────────────────────────────────┘")
+        println("┌─────────────────────────────────────────────────────────────────────────────────┐")
+        println("\t\t 주최 회사 \t\t\t│ \t\t\t 행사내용 \t\t\t │ \t\t 행사일 ")
+        println("└─────────────────────────────────────────────────────────────────────────────────┘")
         val newList= festivalList.asSequence().filterIndexed { index, festival ->
-            festival.name!!.startsWith(t as String)
+            festival.name.startsWith(t as String)
         }.map {
-            println(
-                "검색 결과 : ${it.name} \t\t" +
-                        " ${it.title} \t\t ${it.festivalDate} \t\t"
-            )
+            println("\t\t ${it.name} \t\t\t\t ${it.title} \t\t\t \t\t ${it.festivalDate}")
         }.toList()
         if (newList.isEmpty()) {
             println("검색결과가 없습니다")
         }
+        Thread.sleep(3000)
     }
 
     override fun <T> delete(t: T) {
         val currentListCount = festivalList.size
         for (i in festivalList.indices) {
-            if (t == festivalList[i].name) {
+            if (t == festivalList[i].title) {
                 festivalList.removeAt(i)
                 break
             }
@@ -69,18 +73,18 @@ class FestivalManager : FeatureInterface {
                 val companyName = ConsoleReader.consoleLineScanner()
                 print("행사 제목 : ")
                 val festivalTitle = ConsoleReader.consoleLineScanner()
-                print("개최일 : ")
+                print("개최일 ex)2000.01.01: ")
                 val festivalDate = ConsoleReader.consoleLineScanner()
                 enroll(Festival(companyName, festivalTitle, festivalDate))
                 serializationFestivalFile()
             }
             2-> {
-                println("회사 입력 : ")
+                print("회사 입력 : ")
                 val companyName=ConsoleReader.consoleLineScanner()
                 search(companyName)
             }
             3 -> {
-                print("회사 이름 입력 : ")
+                print("행사 제목 입력 : ")
                 val companyName = ConsoleReader.consoleLineScanner()
                 delete(companyName)
                 serializationFestivalFile()

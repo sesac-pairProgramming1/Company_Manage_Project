@@ -20,14 +20,14 @@ class CompanyManager : FeatureInterface {
     private var companyList: MutableList<Company> = deSerializationCompanyFile()
 
     override fun <T> update(t: T) {
-        var index = 0
+        var index = -1
         for (i in companyList.indices) {
             if (t == companyList[i].name) {
                 index = i
                 break
             }
         }
-        companyList[index] = companyInput()
+        if (index != -1) companyList[index] = companyInput() else println("해당하는 회사가 없습니다.")
     }
 
     override fun showList() {
@@ -56,7 +56,7 @@ class CompanyManager : FeatureInterface {
         println("\t  회사 이름  \t │ \t  사업명  \t │ \t  대표  \t │ \t    주소    \t │ \t  대표가수 ")
         println("└─────────────────────────────────────────────────────────────────────────────────┘")
         val newList= companyList.asSequence().filterIndexed { index, company ->
-            company.field!!.startsWith(t as String)
+                company.field!!.startsWith(t as String,true)
         }.map {
             println(
                 "\t  ${it.name}  \t\t  ${it.field}  \t \t  ${it.representation}  \t\t ${it.address}\t" +
@@ -72,7 +72,7 @@ class CompanyManager : FeatureInterface {
     override fun <T> delete(t: T) {
         val currentListCount = companyList.size
         for (i in companyList.indices) {
-            if (t == companyList[i].name) {
+            if (companyList[i].name.equals(t as String,true) ) {
                 companyList.removeAt(i)
                 break
             }
@@ -87,7 +87,7 @@ class CompanyManager : FeatureInterface {
     fun companyInput(): Company {
         print("회사이름 : ")
         val companyName = ConsoleReader.consoleLineScanner()
-        print("분야 : ")
+        print("사업명 : ")
         val companyField = ConsoleReader.consoleLineScanner()
         print("대표 : ")
         val companyRepresentation = ConsoleReader.consoleLineScanner()
@@ -108,7 +108,7 @@ class CompanyManager : FeatureInterface {
             }
 
             2 -> {
-                print("분야를 입력하세요 : ")
+                print("사업명를 입력하세요 : ")
                 val companyField = ConsoleReader.consoleLineScanner()
                 search(companyField)
 
