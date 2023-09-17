@@ -15,7 +15,16 @@ import java.io.ObjectOutputStream
 class FestivalManager : FeatureInterface {
 
     private var festivalList: MutableList<Festival> = deSerializationFestivalFile()
-    override fun <T> update(t: T) {}
+    override fun <T> update(t: T) {
+        var index = -1
+        for (i in festivalList.indices) {
+            if (t == festivalList[i].title) {
+                index = i
+                break
+            }
+        }
+        if (index != -1) festivalList[index] = festivalInput() else println("해당하는 행사가 없습니다.")
+    }
 
     override fun showList() {
         deSerializationFestivalFile()
@@ -63,17 +72,20 @@ class FestivalManager : FeatureInterface {
         }
     }
 
+    private fun festivalInput(): Festival {
+        print("회사입력 : ")
+        val companyName = ConsoleReader.consoleLineScanner()
+        print("행사 제목 : ")
+        val festivalTitle = ConsoleReader.consoleLineScanner()
+        print("개최일 ex)2000.01.01: ")
+        val festivalDate = ConsoleReader.consoleLineScanner()
+        return Festival(companyName, festivalTitle , festivalDate)
+    }
+
     fun choiceFestivalMenu(number: String) {
         when (number) {
             "1" -> {
-                //입력
-                print("회사입력 : ")
-                val companyName = ConsoleReader.consoleLineScanner()
-                print("행사 제목 : ")
-                val festivalTitle = ConsoleReader.consoleLineScanner()
-                print("개최일 ex)2000.01.01: ")
-                val festivalDate = ConsoleReader.consoleLineScanner()
-                enroll(Festival(companyName, festivalTitle, festivalDate))
+                enroll(festivalInput())
                 serializationFestivalFile()
             }
 
@@ -82,8 +94,14 @@ class FestivalManager : FeatureInterface {
                 val companyName = ConsoleReader.consoleLineScanner()
                 search(companyName)
             }
-
             "3" -> {
+                print("수정할 행사명 : ")
+                val companyName = ConsoleReader.consoleLineScanner()
+                update(companyName)
+                serializationFestivalFile()
+            }
+
+            "4" -> {
                 print("행사 제목 입력 : ")
                 val companyName = ConsoleReader.consoleLineScanner()
                 delete(companyName)

@@ -100,7 +100,7 @@ class CompanyManager : FeatureInterface {
             "1" -> {
                 //입력
                 enroll(companyInput())
-                SerializationCompanyFile()
+                serializationCompanyFile()
             }
 
             "2" -> {
@@ -114,14 +114,14 @@ class CompanyManager : FeatureInterface {
                 print("수정할 회사명 : ")
                 val companyName = ConsoleReader.consoleLineScanner()
                 update(companyName)
-                SerializationCompanyFile()
+                serializationCompanyFile()
             }
 
             "4" -> {
                 print("삭제할 회사명 : ")
                 val companyName = ConsoleReader.consoleLineScanner()
                 delete(companyName)
-                SerializationCompanyFile()
+                serializationCompanyFile()
             }
 
             else -> {
@@ -140,7 +140,7 @@ class CompanyManager : FeatureInterface {
         companyList
     }
 
-    private fun SerializationCompanyFile() = runBlocking {
+    private fun serializationCompanyFile() = runBlocking {
         val message = withContext(Dispatchers.IO) {
             ObjectOutputStream(FileOutputStream("./serialization/company.ser")).use {
                 with(it) {
