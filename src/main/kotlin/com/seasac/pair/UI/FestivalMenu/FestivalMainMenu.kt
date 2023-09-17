@@ -32,7 +32,8 @@ fun showFestivalMain() {
 
 fun showArtistMenuList() {
     print(String.format("%10s", "1. 행사 등록"))
-    print(String.format("%10s", "2. 행사 삭제"))
+    print(String.format("%10s", "2. 행사 검색"))
+    print(String.format("%10s", "3. 행사 삭제"))
     println(String.format("%10s","0. 이전 화면"))
 
 }

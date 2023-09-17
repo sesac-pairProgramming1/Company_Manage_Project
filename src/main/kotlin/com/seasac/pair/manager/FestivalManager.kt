@@ -32,22 +32,16 @@ class FestivalManager : FeatureInterface {
     }
 
     override fun <T> search(t: T) {
-        var existFlag: Boolean = false
-        var existIndex = 0
-        festivalList.forEachIndexed { index, festival ->
-            if (festival == t as Festival) {
-                existFlag = true
-                existIndex = index
-            }
-        }
-        if (existFlag) {
+        val newList= festivalList.asSequence().filterIndexed { index, festival ->
+            festival.name!!.startsWith(t as String)
+        }.map {
             println(
-                "검색 결과 : ${festivalList[existIndex].name} \t\t" +
-                        " ${festivalList[existIndex].title} \t\t ${festivalList[existIndex].festivalDate}"
+                "검색 결과 : ${it.name} \t\t" +
+                        " ${it.title} \t\t ${it.festivalDate} \t\t"
             )
-        } else {
-            println("일치하는 결과가 없습니다.")
-            // Label 이용?
+        }.toList()
+        if (newList.isEmpty()) {
+            println("검색결과가 없습니다")
         }
     }
 
@@ -81,7 +75,12 @@ class FestivalManager : FeatureInterface {
                 enroll(Festival(companyName, festivalTitle, festivalDate))
                 serializationFestivalFile()
             }
-            2 -> {
+            2-> {
+                println("회사 입력 : ")
+                val companyName=ConsoleReader.consoleLineScanner()
+                search(companyName)
+            }
+            3 -> {
                 print("회사 이름 입력 : ")
                 val companyName = ConsoleReader.consoleLineScanner()
                 delete(companyName)

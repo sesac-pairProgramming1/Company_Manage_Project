@@ -43,20 +43,17 @@ class ArtistManager() : FeatureInterface {
     }
 
     override fun <T> search(t: T) {
-        var existFlag: Boolean = false
-        artistList.forEachIndexed { index, artist ->
-            if (artist.name == t as String) {
-                existFlag = true
-                println(
-                    "검색 결과 : ${artistList[index].name} \t\t" +
-                            " ${artistList[index].genre} \t\t ${artistList[index].debutDate}"
-                )
-            }
+        val newList= artistList.asSequence().filterIndexed { index, artist ->
+            artist.genre!!.startsWith(t as String)
+        }.map {
+            println(
+                "검색 결과 : ${it.name} \t\t" +
+                        " ${it.genre} \t\t ${it.debutDate} \t\t"
+            )
+        }.toList()
+        if (newList.isEmpty()) {
+            println("검색결과가 없습니다")
         }
-        if (!existFlag) {
-            println("일치하는 결과가 없습니다.")
-        }
-
     }
 
     override fun <T> delete(t: T) {
@@ -93,7 +90,7 @@ class ArtistManager() : FeatureInterface {
             }
 
             2 -> {
-                print("아티스트명을 입력하세요 : ")
+                print("장르를 입력하세요 : ")
                 val artistName = ConsoleReader.consoleLineScanner()
                 search(artistName)
             }

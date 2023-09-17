@@ -49,19 +49,17 @@ class CompanyManager : FeatureInterface {
     }
 
     override fun <T> search(t: T) {
-        var existFlag: Boolean = false
-        companyList.forEachIndexed { index, company ->
-            if (company.field == t as String) {
-                existFlag = true
-                println(
-                    "검색 결과 : ${companyList[index].name} \t\t" +
-                            " ${companyList[index].field} \t\t ${companyList[index].representation} \t\t" +
-                            "${companyList[index].address} \t\t ${companyList[index].group}"
-                )
-            }
-        }
-        if (!existFlag) {
-            println("일치하는 결과가 없습니다.")
+        val newList= companyList.asSequence().filterIndexed { index, company ->
+            company.field!!.startsWith(t as String)
+        }.map {
+            println(
+                "검색 결과 : ${it.name} \t\t" +
+                        " ${it.field} \t\t ${it.representation} \t\t" +
+                        "${it.address} \t\t ${it.group}"
+            )
+        }.toList()
+        if (newList.isEmpty()) {
+            println("검색결과가 없습니다")
         }
     }
 
