@@ -1,10 +1,5 @@
 package com.seasac.pair.UI.MainMenu
 
-import com.seasac.pair.UI.CompanyMenu.showCompanyMainMenu
-import com.seasac.pair.UI.FestivalMenu.showFestivalMainMenu
-import com.seasac.pair.UI.GroupMenu.showArtistMainMenu
-import com.seasac.pair.common.ConsoleReader
-
 fun showMainMenu() {
     println("┌─────────────────────────────────────────────────────────────────────────────────┐")
     print("│")

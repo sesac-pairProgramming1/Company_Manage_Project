@@ -4,7 +4,7 @@ interface FeatureInterface {
 
     fun<T> update(t: T)
 
-    fun<T> showList()
+    fun showList()
 
     fun<T> enroll(t: T)
 

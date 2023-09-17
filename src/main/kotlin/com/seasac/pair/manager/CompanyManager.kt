@@ -2,8 +2,8 @@ package com.seasac.pair.manager
 
 import com.seasac.pair.Entity.Company
 import com.seasac.pair.FeatureInterface
-import com.seasac.pair.UI.CompanyMenu.showCompanyMainMenu
-import com.seasac.pair.UI.CompanyMenu.showMenuList
+import com.seasac.pair.UI.CompanyMenu.showCompanyMain
+import com.seasac.pair.UI.CompanyMenu.showCompanyMenuList
 import com.seasac.pair.common.ConsoleReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -30,12 +30,16 @@ class CompanyManager : FeatureInterface {
         companyList[index] = companyInput()
     }
 
-    override fun <T> showList() {
+    override fun showList() {
         deSerializationCompanyFile()
+        println(String.format("%39s","목록"))
+        println("┌─────────────────────────────────────────────────────────────────────────────────┐")
+        println("\t  회사 이름  \t │ \t  사업명  \t │ \t  대표  \t │ \t    주소    \t │ \t  대표가수 ")
+        println("└─────────────────────────────────────────────────────────────────────────────────┘")
         companyList.forEach {
             println(
-                "${it.name} \t\t ${it.field} \t\t ${it.representation} \t\t ${it.address} \t\t" +
-                        "${it.group}"
+                "\t  ${it.name}  \t \t\t  ${it.field}  \t \t  ${it.representation}  \t\t ${it.address}\t" +
+                        "\t\t${it.group}"
             )
         }
     }
@@ -96,19 +100,13 @@ class CompanyManager : FeatureInterface {
                 //입력
                 enroll(companyInput())
                 SerializationCompanyFile()
-                showCompanyMainMenu()
-                showList<Company>()
-                showMenuList()
-
             }
 
             2 -> {
                 print("분야를 입력하세요 : ")
                 val companyField = ConsoleReader.consoleLineScanner()
                 search(companyField)
-                showCompanyMainMenu()
-                showList<Company>()
-                showMenuList()
+
             }
 
             3 -> {
