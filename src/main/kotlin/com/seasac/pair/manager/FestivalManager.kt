@@ -15,15 +15,9 @@ import java.io.ObjectOutputStream
 class FestivalManager : FeatureInterface {
 
     private var festivalList: MutableList<Festival> = deSerializationFestivalFile()
-    override fun <T> update(t: T) {
-        var index = -1
-        for (i in festivalList.indices) {
-            if (t == festivalList[i].title) {
-                index = i
-                break
-            }
-        }
-        if (index != -1) festivalList[index] = festivalInput() else println("해당하는 행사가 없습니다.")
+
+    override fun <T> enroll(t: T) {
+        festivalList.add(t as Festival)
     }
 
     override fun showList() {
@@ -35,16 +29,12 @@ class FestivalManager : FeatureInterface {
         }
     }
 
-    override fun <T> enroll(t: T) {
-        festivalList.add(t as Festival)
-    }
-
     override fun <T> search(t: T) {
         println("┌─────────────────────────────────────────────────────────────────────────────────┐")
         println(String.format("%40s", "검색결과"))
         println("└─────────────────────────────────────────────────────────────────────────────────┘")
         showFestivalTableUI()
-        val newList = festivalList.asSequence().filter {  festival ->
+        val newList = festivalList.asSequence().filter { festival ->
             festival.name.startsWith(t as String)
         }.map {
             println("\t\t ${it.name} \t\t\t\t ${it.title} \t\t\t \t\t ${it.festivalDate}")
@@ -53,6 +43,17 @@ class FestivalManager : FeatureInterface {
             println("검색결과가 없습니다")
         }
         Thread.sleep(3000)
+    }
+
+    override fun <T> update(t: T) {
+        var index = -1
+        for (i in festivalList.indices) {
+            if (t == festivalList[i].title) {
+                index = i
+                break
+            }
+        }
+        if (index != -1) festivalList[index] = festivalInput() else println("해당하는 행사가 없습니다.")
     }
 
     override fun <T> delete(t: T) {
@@ -72,16 +73,6 @@ class FestivalManager : FeatureInterface {
         }
     }
 
-    private fun festivalInput(): Festival {
-        print("회사입력 : ")
-        val companyName = ConsoleReader.consoleLineScanner()
-        print("행사 제목 : ")
-        val festivalTitle = ConsoleReader.consoleLineScanner()
-        print("개최일 ex)2000.01.01: ")
-        val festivalDate = ConsoleReader.consoleLineScanner()
-        return Festival(companyName, festivalTitle , festivalDate)
-    }
-
     fun choiceFestivalMenu(number: String) {
         when (number) {
             "1" -> {
@@ -94,6 +85,7 @@ class FestivalManager : FeatureInterface {
                 val companyName = ConsoleReader.consoleLineScanner()
                 search(companyName)
             }
+
             "3" -> {
                 print("수정할 행사명 : ")
                 val companyName = ConsoleReader.consoleLineScanner()
@@ -114,6 +106,16 @@ class FestivalManager : FeatureInterface {
 
             }
         }
+    }
+
+    private fun festivalInput(): Festival {
+        print("회사입력 : ")
+        val companyName = ConsoleReader.consoleLineScanner()
+        print("행사 제목 : ")
+        val festivalTitle = ConsoleReader.consoleLineScanner()
+        print("개최일 ex)2000.01.01: ")
+        val festivalDate = ConsoleReader.consoleLineScanner()
+        return Festival(companyName, festivalTitle, festivalDate)
     }
 
     private fun deSerializationFestivalFile() = runBlocking {

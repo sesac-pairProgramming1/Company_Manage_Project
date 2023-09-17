@@ -17,15 +17,8 @@ class CompanyManager : FeatureInterface {
 
     private var companyList: MutableList<Company> = deSerializationCompanyFile()
 
-    override fun <T> update(t: T) {
-        var index = -1
-        for (i in companyList.indices) {
-            if (t == companyList[i].name) {
-                index = i
-                break
-            }
-        }
-        if (index != -1) companyList[index] = companyInput() else println("해당하는 회사가 없습니다.")
+    override fun <T> enroll(t: T) {
+        companyList.add(t as Company)
     }
 
     override fun showList() {
@@ -38,10 +31,6 @@ class CompanyManager : FeatureInterface {
                         "\t\t${it.group}"
             )
         }
-    }
-
-    override fun <T> enroll(t: T) {
-        companyList.add(t as Company)
     }
 
     override fun <T> search(t: T) {
@@ -61,6 +50,18 @@ class CompanyManager : FeatureInterface {
             println("검색결과가 없습니다")
         }
         Thread.sleep(3000)
+    }
+
+
+    override fun <T> update(t: T) {
+        var index = -1
+        for (i in companyList.indices) {
+            if (t == companyList[i].name) {
+                index = i
+                break
+            }
+        }
+        if (index != -1) companyList[index] = companyInput() else println("해당하는 회사가 없습니다.")
     }
 
     override fun <T> delete(t: T) {
@@ -151,16 +152,13 @@ class CompanyManager : FeatureInterface {
         }
     }
 
-
     companion object {
         private var INSTANCE: CompanyManager? = null
-
         fun initCompanyInstance(): CompanyManager =
             INSTANCE ?: synchronized(this) {
                 return@synchronized INSTANCE ?: CompanyManager().also {
                     INSTANCE = it
                 }
             }
-
     }
 }

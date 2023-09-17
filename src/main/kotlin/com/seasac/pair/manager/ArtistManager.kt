@@ -17,28 +17,17 @@ class ArtistManager() : FeatureInterface {
 
     private var artistList: MutableList<Artist> = deSerializationArtistFile()
 
-    override fun <T> update(t: T) {
-        var index = -1
-        for (i in artistList.indices) {
-            if (t == artistList[i].name) {
-                index = i
-                break
-            }
-        }
-        if (index != -1) artistList[index] = artistInput() else println("해당하는 아티스트가 없습니다.")
+    override fun <T> enroll(t: T) {
+        artistList.add(t as Artist)
     }
 
     override fun showList() {
         deSerializationArtistFile()
         println(String.format("%39s", "목록"))
-       showArtistTableUI()
+        showArtistTableUI()
         artistList.forEach {
             println("\t\t ${it.name} \t\t\t\t \t\t ${it.genre} \t\t\t \t\t${it.debutDate}")
         }
-    }
-
-    override fun <T> enroll(t: T) {
-        artistList.add(t as Artist)
     }
 
     override fun <T> search(t: T) {
@@ -57,6 +46,17 @@ class ArtistManager() : FeatureInterface {
         Thread.sleep(3000)
     }
 
+    override fun <T> update(t: T) {
+        var index = -1
+        for (i in artistList.indices) {
+            if (t == artistList[i].name) {
+                index = i
+                break
+            }
+        }
+        if (index != -1) artistList[index] = artistInput() else println("해당하는 아티스트가 없습니다.")
+    }
+
     override fun <T> delete(t: T) {
         val currentListCount = artistList.size
         for (i in artistList.indices) {
@@ -72,16 +72,6 @@ class ArtistManager() : FeatureInterface {
             println("다시 입력해주세요")
             Thread.sleep(1000)
         }
-    }
-
-    private fun artistInput(): Artist {
-        print("아티스트명 : ")
-        val artistName = ConsoleReader.consoleLineScanner()
-        print("장르 : ")
-        val artistGenre = ConsoleReader.consoleLineScanner()
-        print("데뷔날짜 ex)2000.01.01 : ")
-        val artistDebutDate = ConsoleReader.consoleLineScanner()
-        return Artist(artistName, artistGenre, artistDebutDate)
     }
 
     fun choiceArtistMenu(number: String) {
@@ -117,6 +107,16 @@ class ArtistManager() : FeatureInterface {
                 Thread.sleep(1000)
             }
         }
+    }
+
+    private fun artistInput(): Artist {
+        print("아티스트명 : ")
+        val artistName = ConsoleReader.consoleLineScanner()
+        print("장르 : ")
+        val artistGenre = ConsoleReader.consoleLineScanner()
+        print("데뷔날짜 ex)2000.01.01 : ")
+        val artistDebutDate = ConsoleReader.consoleLineScanner()
+        return Artist(artistName, artistGenre, artistDebutDate)
     }
 
     private fun deSerializationArtistFile() = runBlocking {

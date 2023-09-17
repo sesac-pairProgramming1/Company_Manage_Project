@@ -6,11 +6,9 @@ import com.seasac.pair.manager.ArtistManager
 import com.seasac.pair.play
 
 fun showArtistMain() {
-    val artistManager= ArtistManager.initArtistInstance()
+    val artistManager = ArtistManager.initArtistInstance()
     while (true) {
         showArtistTitleUI()
-
-
         artistManager.showList()
         showArtistMenuListUI()
         print("원하시는 메뉴를 선택해 주세요 : ")
@@ -30,7 +28,7 @@ fun showArtistMenuListUI() {
     print(String.format("%11s", "2. 장르로 검색"))
     print(String.format("%10s", "3. 정보 수정"))
     print(String.format("%10s", "4. 계약 해지"))
-    println(String.format("%10s","0. 이전 화면"))
+    println(String.format("%10s", "0. 이전 화면"))
 }
 
 fun showArtistTitleUI() {
