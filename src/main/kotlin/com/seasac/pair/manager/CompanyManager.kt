@@ -88,7 +88,8 @@ class CompanyManager : FeatureInterface {
         print("장소 : ")
         val companyAddress = ConsoleReader.consoleLineScanner()
         print("아티스트 : ")
-        val companyGroup = ConsoleReader.consoleLineScanner()
+        var companyGroup = ConsoleReader.consoleLineScanner()
+        if (companyGroup == "") companyGroup = "없음"
         return Company(companyName, companyField, companyRepresentation, companyAddress, companyGroup)
     }
 
