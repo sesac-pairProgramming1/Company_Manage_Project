@@ -11,9 +11,9 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
+import java.lang.Exception
 
 class CompanyManager : FeatureInterface {
-
 
     private var companyList: MutableList<Company> = deSerializationCompanyFile()
 
@@ -28,7 +28,7 @@ class CompanyManager : FeatureInterface {
         companyList.forEach {
             println(
                 "\t  ${it.name}  \t\t  ${it.field}  \t \t  ${it.representation}  \t\t ${it.address}\t" +
-                        "\t\t${it.group}"
+                        "\t\t${it.mainArtist}"
             )
         }
     }
@@ -43,7 +43,7 @@ class CompanyManager : FeatureInterface {
         }.map {
             println(
                 "\t  ${it.name}  \t\t  ${it.field}  \t \t  ${it.representation}  \t\t ${it.address}\t" +
-                        "\t\t${it.group}"
+                        "\t\t${it.mainArtist}"
             )
         }.toList()
         if (newList.isEmpty()) {
@@ -91,9 +91,9 @@ class CompanyManager : FeatureInterface {
         print("장소 : ")
         val companyAddress = ConsoleReader.consoleLineScanner()
         print("아티스트 : ")
-        var companyGroup = ConsoleReader.consoleLineScanner()
-        if (companyGroup == "") companyGroup = "없음"
-        return Company(companyName, companyField, companyRepresentation, companyAddress, companyGroup)
+        var companyMainArist = ConsoleReader.consoleLineScanner()
+        if (companyMainArist == "") companyMainArist = "없음"
+        return Company(companyName, companyField, companyRepresentation, companyAddress, companyMainArist)
     }
 
     fun choiceCompanyMenu(number: String) {
