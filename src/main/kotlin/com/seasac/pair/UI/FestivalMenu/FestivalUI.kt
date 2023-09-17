@@ -7,13 +7,11 @@ import com.seasac.pair.play
 
 
 fun showFestivalMain() {
-    val festivalManager= FestivalManager.initFestivalInstance()
+    val festivalManager = FestivalManager.initFestivalInstance()
     while (true) {
         println("┌─────────────────────────────────────────────────────────────────────────────────┐")
         println(String.format("%40s", "행사 관리"))
         println("└─────────────────────────────────────────────────────────────────────────────────┘")
-
-
         festivalManager.showList()
         showFestivalMenuListUI()
         print("원하시는 메뉴를 선택해 주세요 : ")
@@ -33,7 +31,7 @@ fun showFestivalMenuListUI() {
     print(String.format("%10s", "2. 행사 검색"))
     print(String.format("%10s", "3. 행사 수정"))
     print(String.format("%10s", "4. 행사 삭제"))
-    println(String.format("%10s","0. 이전 화면"))
+    println(String.format("%10s", "0. 이전 화면"))
 
 }
 

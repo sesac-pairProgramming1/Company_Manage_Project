@@ -6,12 +6,10 @@ import com.seasac.pair.manager.CompanyManager
 import com.seasac.pair.play
 
 fun showCompanyMain() {
-    val companyManager=CompanyManager.initCompanyInstance()
+    val companyManager = CompanyManager.initCompanyInstance()
     while (true) {
         showCompanyTitleUI()
-
-
-    companyManager.showList()
+        companyManager.showList()
         showCompanyMenuListUI()
         print("원하시는 메뉴를 선택해 주세요 : ")
         val companyMenuInput = ConsoleReader.consoleLineScanner()
@@ -30,7 +28,7 @@ fun showCompanyMenuListUI() {
     print(String.format("%10s", "2. 계열사 검색"))
     print(String.format("%10s", "3. 계열사 수정"))
     print(String.format("%10s", "4. 계열사 삭제"))
-    println(String.format("%10s","0. 이전 화면"))
+    println(String.format("%10s", "0. 이전 화면"))
 }
 
 fun showCompanyTitleUI() {
