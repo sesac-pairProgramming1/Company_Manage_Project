@@ -2,6 +2,7 @@ package com.seasac.pair.manager
 
 import com.seasac.pair.Entity.Festival
 import com.seasac.pair.FeatureInterface
+import com.seasac.pair.UI.FestivalMenu.showFestivalTableUI
 import com.seasac.pair.common.ConsoleReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -18,10 +19,8 @@ class FestivalManager : FeatureInterface {
 
     override fun showList() {
         deSerializationFestivalFile()
-        println(String.format("%39s","목록"))
-        println("┌─────────────────────────────────────────────────────────────────────────────────┐")
-        println("\t\t 주최 회사 \t\t\t│ \t\t\t 행사내용 \t\t\t │ \t\t 행사일 ")
-        println("└─────────────────────────────────────────────────────────────────────────────────┘")
+        println(String.format("%39s", "목록"))
+        showFestivalTableUI()
         festivalList.forEach {
             println("\t\t ${it.name} \t\t\t\t ${it.title} \t\t\t \t\t ${it.festivalDate}")
         }
@@ -35,10 +34,8 @@ class FestivalManager : FeatureInterface {
         println("┌─────────────────────────────────────────────────────────────────────────────────┐")
         println(String.format("%40s", "검색결과"))
         println("└─────────────────────────────────────────────────────────────────────────────────┘")
-        println("┌─────────────────────────────────────────────────────────────────────────────────┐")
-        println("\t\t 주최 회사 \t\t\t│ \t\t\t 행사내용 \t\t\t │ \t\t 행사일 ")
-        println("└─────────────────────────────────────────────────────────────────────────────────┘")
-        val newList= festivalList.asSequence().filterIndexed { index, festival ->
+        showFestivalTableUI()
+        val newList = festivalList.asSequence().filter {  festival ->
             festival.name.startsWith(t as String)
         }.map {
             println("\t\t ${it.name} \t\t\t\t ${it.title} \t\t\t \t\t ${it.festivalDate}")
@@ -66,7 +63,6 @@ class FestivalManager : FeatureInterface {
         }
     }
 
-
     fun choiceFestivalMenu(number: String) {
         when (number) {
             "1" -> {
@@ -80,17 +76,20 @@ class FestivalManager : FeatureInterface {
                 enroll(Festival(companyName, festivalTitle, festivalDate))
                 serializationFestivalFile()
             }
-            "2"-> {
+
+            "2" -> {
                 print("회사 입력 : ")
-                val companyName=ConsoleReader.consoleLineScanner()
+                val companyName = ConsoleReader.consoleLineScanner()
                 search(companyName)
             }
+
             "3" -> {
                 print("행사 제목 입력 : ")
                 val companyName = ConsoleReader.consoleLineScanner()
                 delete(companyName)
                 serializationFestivalFile()
             }
+
             else -> {
                 println("다시 입력해주세요")
                 Thread.sleep(1000)
@@ -98,7 +97,8 @@ class FestivalManager : FeatureInterface {
             }
         }
     }
-    fun deSerializationFestivalFile() = runBlocking {
+
+    private fun deSerializationFestivalFile() = runBlocking {
         festivalList = withContext(Dispatchers.IO) {
             ObjectInputStream(FileInputStream("./serialization/festival.ser")).use {
                 it.readObject() as MutableList<Festival>
@@ -107,7 +107,7 @@ class FestivalManager : FeatureInterface {
         festivalList
     }
 
-    fun serializationFestivalFile() = runBlocking {
+    private fun serializationFestivalFile() = runBlocking {
         val message = withContext(Dispatchers.IO) {
             ObjectOutputStream(FileOutputStream("./serialization/festival.ser")).use {
                 with(it) {
@@ -117,15 +117,17 @@ class FestivalManager : FeatureInterface {
             }
         }
     }
+
     companion object {
         private var INSTANCE: FestivalManager? = null
-        fun initialize() {
-            if(FestivalManager.INSTANCE ==null) {
-                FestivalManager.INSTANCE = FestivalManager()
-            } else {
-                println("이미 초기화 되었습니다.")
+
+        fun initFestivalInstance(): FestivalManager =
+            INSTANCE ?: synchronized(this) {
+                return@synchronized INSTANCE ?: FestivalManager().also {
+                    INSTANCE = it
+                }
             }
-        }
+
     }
 }
 

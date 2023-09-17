@@ -11,8 +11,8 @@ fun showMainMenu() {
     print(String.format("%10s", "3. 행사 관리"))
     println(String.format("%10s", "4. 종료 하기"))
 
-
 }
+
 fun showEndLine() {
     println("===================================================================================")
 }

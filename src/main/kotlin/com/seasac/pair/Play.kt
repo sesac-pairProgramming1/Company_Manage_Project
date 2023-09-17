@@ -2,11 +2,10 @@ package com.seasac.pair
 
 import com.seasac.pair.UI.CompanyMenu.showCompanyMain
 import com.seasac.pair.UI.FestivalMenu.showFestivalMain
-import com.seasac.pair.UI.GroupMenu.showArtistMain
+import com.seasac.pair.UI.ArtistMenu.showArtistMain
 import com.seasac.pair.UI.MainMenu.showEndLine
 import com.seasac.pair.UI.MainMenu.showMainMenu
 import com.seasac.pair.common.ConsoleReader
-import java.lang.Exception
 
 fun play() {
     while (true) {

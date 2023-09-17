@@ -2,8 +2,7 @@ package com.seasac.pair.manager
 
 import com.seasac.pair.Entity.Company
 import com.seasac.pair.FeatureInterface
-import com.seasac.pair.UI.CompanyMenu.showCompanyMain
-import com.seasac.pair.UI.CompanyMenu.showCompanyMenuList
+import com.seasac.pair.UI.CompanyMenu.showCompanyTableUI
 import com.seasac.pair.common.ConsoleReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -15,7 +14,6 @@ import java.io.ObjectOutputStream
 
 class CompanyManager : FeatureInterface {
 
-    // 반복되는 코드가 조금 많은 것 같다 (Manager 별로 코드 흐름이 같다)
 
     private var companyList: MutableList<Company> = deSerializationCompanyFile()
 
@@ -32,10 +30,8 @@ class CompanyManager : FeatureInterface {
 
     override fun showList() {
         deSerializationCompanyFile()
-        println(String.format("%39s","목록"))
-        println("┌─────────────────────────────────────────────────────────────────────────────────┐")
-        println("\t  회사 이름  \t │ \t  사업명  \t │ \t  대표  \t │ \t    주소    \t │ \t  대표가수 ")
-        println("└─────────────────────────────────────────────────────────────────────────────────┘")
+        println(String.format("%39s", "목록"))
+        showCompanyTableUI()
         companyList.forEach {
             println(
                 "\t  ${it.name}  \t\t  ${it.field}  \t \t  ${it.representation}  \t\t ${it.address}\t" +
@@ -52,11 +48,9 @@ class CompanyManager : FeatureInterface {
         println("┌─────────────────────────────────────────────────────────────────────────────────┐")
         println(String.format("%40s", "검색결과"))
         println("└─────────────────────────────────────────────────────────────────────────────────┘")
-        println("┌─────────────────────────────────────────────────────────────────────────────────┐")
-        println("\t  회사 이름  \t │ \t  사업명  \t │ \t  대표  \t │ \t    주소    \t │ \t  대표가수 ")
-        println("└─────────────────────────────────────────────────────────────────────────────────┘")
-        val newList= companyList.asSequence().filterIndexed { index, company ->
-                company.field!!.startsWith(t as String,true)
+        showCompanyTableUI()
+        val newList = companyList.asSequence().filter { company ->
+            company.field!!.startsWith(t as String, true)
         }.map {
             println(
                 "\t  ${it.name}  \t\t  ${it.field}  \t \t  ${it.representation}  \t\t ${it.address}\t" +
@@ -72,7 +66,7 @@ class CompanyManager : FeatureInterface {
     override fun <T> delete(t: T) {
         val currentListCount = companyList.size
         for (i in companyList.indices) {
-            if (companyList[i].name.equals(t as String,true) ) {
+            if (companyList[i].name.equals(t as String, true)) {
                 companyList.removeAt(i)
                 break
             }
@@ -86,7 +80,7 @@ class CompanyManager : FeatureInterface {
         }
     }
 
-    fun companyInput(): Company {
+    private fun companyInput(): Company {
         print("회사이름 : ")
         val companyName = ConsoleReader.consoleLineScanner()
         print("사업명 : ")
@@ -129,6 +123,7 @@ class CompanyManager : FeatureInterface {
                 delete(companyName)
                 SerializationCompanyFile()
             }
+
             else -> {
                 println("다시 입력해주세요")
                 Thread.sleep(1000)
@@ -136,7 +131,7 @@ class CompanyManager : FeatureInterface {
         }
     }
 
-    fun deSerializationCompanyFile() = runBlocking {
+    private fun deSerializationCompanyFile() = runBlocking {
         companyList = withContext(Dispatchers.IO) {
             ObjectInputStream(FileInputStream("./serialization/company.ser")).use {
                 it.readObject() as MutableList<Company>
@@ -145,7 +140,7 @@ class CompanyManager : FeatureInterface {
         companyList
     }
 
-    fun SerializationCompanyFile() = runBlocking {
+    private fun SerializationCompanyFile() = runBlocking {
         val message = withContext(Dispatchers.IO) {
             ObjectOutputStream(FileOutputStream("./serialization/company.ser")).use {
                 with(it) {
@@ -160,12 +155,12 @@ class CompanyManager : FeatureInterface {
     companion object {
         private var INSTANCE: CompanyManager? = null
 
-        fun initialize() {
-            if (CompanyManager.INSTANCE == null) {
-                CompanyManager.INSTANCE = CompanyManager()
-            } else {
-                println("이미 초기화 되었습니다.")
+        fun initCompanyInstance(): CompanyManager =
+            INSTANCE ?: synchronized(this) {
+                return@synchronized INSTANCE ?: CompanyManager().also {
+                    INSTANCE = it
+                }
             }
-        }
+
     }
 }
