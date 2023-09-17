@@ -1,7 +1,7 @@
 package com.seasac.pair.UI.FestivalMenu
 
 import com.seasac.pair.UI.MainMenu.showEndLine
-import com.seasac.pair.common.requestInput
+import com.seasac.pair.common.ConsoleReader
 import com.seasac.pair.manager.FestivalManager
 import com.seasac.pair.play
 
@@ -17,8 +17,8 @@ fun showFestivalMain() {
         festivalManager.showList()
         showArtistMenuList()
         print("원하시는 메뉴를 선택해 주세요 : ")
-        val festivalInput = requestInput()
-        if (festivalInput==0) {
+        val festivalInput = ConsoleReader.consoleLineScanner()
+        if (festivalInput == "0") {
             showEndLine()
             play()
             break

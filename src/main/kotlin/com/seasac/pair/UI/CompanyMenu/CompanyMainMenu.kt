@@ -1,7 +1,7 @@
 package com.seasac.pair.UI.CompanyMenu
 
 import com.seasac.pair.UI.MainMenu.showEndLine
-import com.seasac.pair.common.requestInput
+import com.seasac.pair.common.ConsoleReader
 import com.seasac.pair.manager.CompanyManager
 import com.seasac.pair.play
 
@@ -16,8 +16,8 @@ fun showCompanyMain() {
     companyManager.showList()
         showCompanyMenuList()
         print("원하시는 메뉴를 선택해 주세요 : ")
-        val companyMenuInput = requestInput()
-        if (companyMenuInput==0) {
+        val companyMenuInput = ConsoleReader.consoleLineScanner()
+        if (companyMenuInput == "0") {
             showEndLine()
             play()
             break

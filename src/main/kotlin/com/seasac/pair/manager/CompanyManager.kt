@@ -79,8 +79,10 @@ class CompanyManager : FeatureInterface {
         }
         if (currentListCount - 1 == companyList.size) {
             println("삭제 완료되었습니다")
+            Thread.sleep(1000)
         } else {
             println("다시 입력해주세요")
+            Thread.sleep(1000)
         }
     }
 
@@ -99,33 +101,37 @@ class CompanyManager : FeatureInterface {
         return Company(companyName, companyField, companyRepresentation, companyAddress, companyGroup)
     }
 
-    fun choiceCompanyMenu(number: Int) {
+    fun choiceCompanyMenu(number: String) {
         when (number) {
-            1 -> {
+            "1" -> {
                 //입력
                 enroll(companyInput())
                 SerializationCompanyFile()
             }
 
-            2 -> {
+            "2" -> {
                 print("사업명를 입력하세요 : ")
                 val companyField = ConsoleReader.consoleLineScanner()
                 search(companyField)
 
             }
 
-            3 -> {
+            "3" -> {
                 print("수정할 회사명 : ")
                 val companyName = ConsoleReader.consoleLineScanner()
                 update(companyName)
                 SerializationCompanyFile()
             }
 
-            4 -> {
+            "4" -> {
                 print("삭제할 회사명 : ")
                 val companyName = ConsoleReader.consoleLineScanner()
                 delete(companyName)
                 SerializationCompanyFile()
+            }
+            else -> {
+                println("다시 입력해주세요")
+                Thread.sleep(1000)
             }
         }
     }

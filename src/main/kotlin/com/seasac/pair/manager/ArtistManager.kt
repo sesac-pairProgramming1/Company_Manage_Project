@@ -70,8 +70,10 @@ class ArtistManager() : FeatureInterface {
         }
         if (currentListCount - 1 == artistList.size) {
             println("삭제 완료되었습니다")
+            Thread.sleep(1000)
         } else {
             println("다시 입력해주세요")
+            Thread.sleep(1000)
         }
     }
 
@@ -85,32 +87,36 @@ class ArtistManager() : FeatureInterface {
         return Artist(artistName,artistGenre,artistDebutDate)
     }
 
-    fun choiceArtistMenu(number: Int) {
+    fun choiceArtistMenu(number: String) {
         when (number) {
-            1 -> {
+            "1" -> {
                 //입력
                 enroll(artistInput())
                 serializationArtistFile()
             }
 
-            2 -> {
+            "2" -> {
                 print("장르를 입력하세요 : ")
                 val artistName = ConsoleReader.consoleLineScanner()
                 search(artistName)
             }
 
-            3 -> {
+            "3" -> {
                 print("수정할 아티스트명 : ")
                 val artistName = ConsoleReader.consoleLineScanner()
                 update(artistName)
                 serializationArtistFile()
             }
 
-            4 -> {
+            "4" -> {
                 print("삭제할 아티스트명 : ")
                 val artistName = ConsoleReader.consoleLineScanner()
                 delete(artistName)
                 serializationArtistFile()
+            }
+            else -> {
+                println("다시 입력해주세요")
+                Thread.sleep(1000)
             }
         }
     }

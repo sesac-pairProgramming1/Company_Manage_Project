@@ -59,15 +59,17 @@ class FestivalManager : FeatureInterface {
         }
         if (currentListCount - 1 == festivalList.size) {
             println("삭제 완료되었습니다")
+            Thread.sleep(1000)
         } else {
             println("다시 입력해주세요")
+            Thread.sleep(1000)
         }
     }
 
 
-    fun choiceFestivalMenu(number: Int) {
+    fun choiceFestivalMenu(number: String) {
         when (number) {
-            1 -> {
+            "1" -> {
                 //입력
                 print("회사입력 : ")
                 val companyName = ConsoleReader.consoleLineScanner()
@@ -78,16 +80,21 @@ class FestivalManager : FeatureInterface {
                 enroll(Festival(companyName, festivalTitle, festivalDate))
                 serializationFestivalFile()
             }
-            2-> {
+            "2"-> {
                 print("회사 입력 : ")
                 val companyName=ConsoleReader.consoleLineScanner()
                 search(companyName)
             }
-            3 -> {
+            "3" -> {
                 print("행사 제목 입력 : ")
                 val companyName = ConsoleReader.consoleLineScanner()
                 delete(companyName)
                 serializationFestivalFile()
+            }
+            else -> {
+                println("다시 입력해주세요")
+                Thread.sleep(1000)
+
             }
         }
     }

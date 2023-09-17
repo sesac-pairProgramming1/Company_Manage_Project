@@ -1,7 +1,7 @@
 package com.seasac.pair.UI.GroupMenu
 
 import com.seasac.pair.UI.MainMenu.showEndLine
-import com.seasac.pair.common.requestInput
+import com.seasac.pair.common.ConsoleReader
 import com.seasac.pair.manager.ArtistManager
 import com.seasac.pair.play
 
@@ -16,8 +16,8 @@ fun showArtistMain() {
         artistManager.showList()
         showArtistMenuList()
         print("원하시는 메뉴를 선택해 주세요 : ")
-        val artistMenuInput = requestInput()
-        if (artistMenuInput==0) {
+        val artistMenuInput = ConsoleReader.consoleLineScanner()
+        if (artistMenuInput == "0") {
             showEndLine()
             play()
             break
