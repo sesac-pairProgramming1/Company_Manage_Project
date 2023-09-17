@@ -14,13 +14,16 @@ import java.io.ObjectOutputStream
 class FestivalManager : FeatureInterface {
 
     private var festivalList: MutableList<Festival> = deSerializationFestivalFile()
-    override fun <T> update(t: T) {
+    override fun <T> update(t: T) {}
 
-    }
-
-    override fun <T> showList() {
+    override fun showList() {
+        deSerializationFestivalFile()
+        println(String.format("%39s","목록"))
+        println("┌─────────────────────────────────────────────────────────────────────────────────┐")
+        println("\t\t 주최 회사 \t\t\t│ \t\t\t 행사내용 \t\t\t │ \t\t 행사일 ")
+        println("└─────────────────────────────────────────────────────────────────────────────────┘")
         festivalList.forEach {
-            println("${it.name} \t\t ${it.title} \t\t ${it.festivalDate}")
+            println("\t\t ${it.name} \t\t\t\t \t\t\t ${it.title} \t\t\t \t\t ${it.festivalDate}")
         }
     }
 
@@ -79,6 +82,7 @@ class FestivalManager : FeatureInterface {
                 serializationFestivalFile()
             }
             2 -> {
+                print("회사 이름 입력 : ")
                 val companyName = ConsoleReader.consoleLineScanner()
                 delete(companyName)
                 serializationFestivalFile()

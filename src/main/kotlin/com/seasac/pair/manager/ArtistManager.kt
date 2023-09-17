@@ -27,10 +27,14 @@ class ArtistManager() : FeatureInterface {
         artistList[index] = artistInput()
     }
 
-    override fun <T> showList() {
+    override fun showList() {
         deSerializationArtistFile()
+        println(String.format("%39s","목록"))
+        println("┌─────────────────────────────────────────────────────────────────────────────────┐")
+        println("\t\t 가수 이름 \t\t\t│ \t\t\t 장르 \t\t\t │ \t\t\t 데뷔일 ")
+        println("└─────────────────────────────────────────────────────────────────────────────────┘")
         artistList.forEach {
-            println("${it.name} \t\t ${it.genre} \t\t ${it.debutDate}")
+            println("\t\t ${it.name} \t\t\t\t \t\t\t ${it.genre} \t\t\t \t\t${it.debutDate}")
         }
     }
 
