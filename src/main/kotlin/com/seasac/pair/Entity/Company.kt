@@ -11,5 +11,5 @@ data class Company(
     val field : String?=null,
     val representation : String?=null,
     val address : String?=null,
-    val mainArtist : String?=null,
+    val group : String?=null,
 ) : Serializable

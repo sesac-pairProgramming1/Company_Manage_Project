@@ -28,7 +28,7 @@ class CompanyManager : FeatureInterface {
         companyList.forEach {
             println(
                 "\t  ${it.name}  \t\t  ${it.field}  \t \t  ${it.representation}  \t\t ${it.address}\t" +
-                        "\t\t${it.mainArtist}"
+                        "\t\t${it.group}"
             )
         }
     }
@@ -43,7 +43,7 @@ class CompanyManager : FeatureInterface {
         }.map {
             println(
                 "\t  ${it.name}  \t\t  ${it.field}  \t \t  ${it.representation}  \t\t ${it.address}\t" +
-                        "\t\t${it.mainArtist}"
+                        "\t\t${it.group}"
             )
         }.toList()
         if (newList.isEmpty()) {
