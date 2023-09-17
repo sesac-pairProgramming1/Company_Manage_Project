@@ -1,5 +1,10 @@
 package com.seasac.pair
 
+/**
+ * Feature interface
+ * CRUD 기능을 위한 인터페이스
+ * @constructor Create empty Feature interface
+ */
 interface FeatureInterface {
 
     fun<T> update(t: T)
