@@ -52,7 +52,6 @@ class CompanyManager : FeatureInterface {
         Thread.sleep(3000)
     }
 
-
     override fun <T> update(t: T) {
         var index = -1
         for (i in companyList.indices) {

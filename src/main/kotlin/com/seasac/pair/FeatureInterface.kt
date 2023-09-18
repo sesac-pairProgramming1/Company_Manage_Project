@@ -6,14 +6,16 @@ package com.seasac.pair
  * @constructor Create empty Feature interface
  */
 interface FeatureInterface {
-
-    fun<T> update(t: T)
-
-    fun showList()
-
     fun<T> enroll(t: T)
 
     fun<T> search(t:T)
 
+    fun<T> update(t: T)
+
     fun<T> delete(t : T)
+
+    fun showList()
+
+
+
 }
